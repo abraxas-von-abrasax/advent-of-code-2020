@@ -1,10 +1,16 @@
 use std::fs;
 use std::ptr;
 
+#[cfg(windows)]
+const LINE_ENDING: &'static str = "\r\n";
+#[cfg(not(windows))]
+const LINE_ENDING: &'static str = "\n";
+
 fn read_file(file_name: &str) -> Vec<i32> {
     let contents = fs::read_to_string(file_name)
         .expect("Something went wrong while reading the file");
-    return contents.trim().split('\n')
+
+    return contents.trim().split(LINE_ENDING)
         .map(|s| String::from(s))
         .map(|s| s.parse::<i32>().expect("Cannot parse string."))
         .collect()

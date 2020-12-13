@@ -1,5 +1,10 @@
 use std::fs;
 
+#[cfg(windows)]
+const LINE_ENDING: &'static str = "\r\n";
+#[cfg(not(windows))]
+const LINE_ENDING: &'static str = "\n";
+
 enum SpaceChar {
     ROW(char),
     COL(char)
@@ -44,7 +49,7 @@ fn get_input() -> Vec<Seat> {
     let contents = fs::read_to_string("src/input.txt")
         .expect("Could not read input.");
     contents.trim()
-        .split('\n')
+        .split(LINE_ENDING)
         .map(|row| Seat::new(String::from(row)))
         .collect::<Vec<Seat>>()
 }
