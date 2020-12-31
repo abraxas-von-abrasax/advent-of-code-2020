@@ -1,6 +1,11 @@
 use std::fs;
 use regex::Regex;
 
+#[cfg(windows)]
+const LINE_ENDING: &'static str = "\r\n";
+#[cfg(not(windows))]
+const LINE_ENDING: &'static str = "\n";
+
 struct Passport {
     byr: Option<u16>,
     iyr: Option<u16>,
@@ -103,7 +108,7 @@ impl Passport {
 fn get_input() -> Vec<Passport> {
     let contents = fs::read_to_string("src/input.txt")
         .expect("Could not read input.");
-    let contents: Vec<&str> = contents.split('\n').collect();
+    let contents: Vec<&str> = contents.split(LINE_ENDING).collect();
 
     let mut passports: Vec<Passport> = Vec::new();
     let mut passport_row = String::new();

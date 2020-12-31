@@ -1,5 +1,10 @@
 use std::fs;
 
+#[cfg(windows)]
+const LINE_ENDING: &'static str = "\r\n";
+#[cfg(not(windows))]
+const LINE_ENDING: &'static str = "\n";
+
 struct Password {
     test_char: char,
     min: u32,
@@ -10,7 +15,7 @@ struct Password {
 fn read_input() -> Vec<Password> {
     let contents = fs::read_to_string("src/input.txt")
         .expect("Something went wrong while reading the file");
-    return contents.trim().split('\n')
+    return contents.trim().split(LINE_ENDING)
         .map(|s| {
             let dash_split: Vec<&str> = s.split('-').collect();
             let min = String::from(dash_split[0]);

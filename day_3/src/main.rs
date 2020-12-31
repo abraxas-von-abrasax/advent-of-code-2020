@@ -1,5 +1,10 @@
 use std::fs;
 
+#[cfg(windows)]
+const LINE_ENDING: &'static str = "\r\n";
+#[cfg(not(windows))]
+const LINE_ENDING: &'static str = "\n";
+
 type Field = Vec<Vec<FieldType>>;
 
 enum FieldType {
@@ -10,7 +15,7 @@ enum FieldType {
 fn get_input() -> Field {
     let contents = fs::read_to_string("src/input.txt")
         .expect("Could not read input.");
-    contents.trim().split('\n')
+    contents.trim().split(LINE_ENDING)
         .map(|row|
             row.chars()
                 .map(|c| if c == '.' { FieldType::EMPTY } else { FieldType::TREE })

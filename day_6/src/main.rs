@@ -1,10 +1,16 @@
 use std::fs;
 use array_tool::vec::Intersect;
 
+#[cfg(windows)]
+const LINE_ENDING: &'static str = "\r\n";
+#[cfg(not(windows))]
+const LINE_ENDING: &'static str = "\n";
+
+
 fn get_file_content() -> Vec<String> {
     let contents = fs::read_to_string("src/input.txt")
         .expect("Could not read input.");
-    contents.split('\n').map(|row| String::from(row)).collect()
+    contents.split(LINE_ENDING).map(|row| String::from(row)).collect()
 }
 
 fn solve_first(contents: &Vec<String>) -> u32 {
