@@ -3,6 +3,9 @@ from typing import Optional, List
 
 bags = {}
 
+with open('input.txt') as f:
+    content = [line.strip() for line in f.readlines()]
+
 
 class Containment:
     number: int
@@ -26,10 +29,6 @@ class Bag:
     def __init__(self, color: str):
         self.color = color
         self.contains = None
-
-
-with open('input.txt') as f:
-    content = [line.strip() for line in f.readlines()]
 
 
 def parse_input() -> None:
