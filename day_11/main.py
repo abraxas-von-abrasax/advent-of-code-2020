@@ -80,7 +80,8 @@ class Model:
         this = self.field[row][col]
         if this.is_floor():
             return False
-        if not this.is_occupied() and self.__should_occupy(row, col, only_check_immediate):
+        if not this.is_occupied() and self.__should_occupy(
+                row, col, only_check_immediate):
             this.set_occupied()
             return True
         elif this.is_occupied() and self.__should_free(row, col, min_occupied, only_check_immediate):
